@@ -5,7 +5,7 @@ import prisma from '@/lib/prisma'
 import { currentUser } from '@clerk/nextjs'
 import { FaceIcon, InfoCircledIcon } from '@radix-ui/react-icons'
 import { Suspense } from 'react'
-
+import CollectionCard from '@/components/CollectionCard'
 const Home = async () => {
     return (
         <>
@@ -48,6 +48,9 @@ function WelcomeMsgFallback() {
 async function CollectionList() {
     const user = await currentUser()
     const collections = await prisma.collection.findMany({
+        include:{
+            tasks:true
+        },
         where: {
             userId: user?.id,
         },
@@ -70,4 +73,18 @@ async function CollectionList() {
                 <CreateCollection />
             </div>
         )
+
+    return (
+        <div className=''>
+            <CreateCollection />
+            <div className='flex flex-col gap-4 mt-4'>
+                {collections.map((collection) => (
+                    <CollectionCard
+                        key={collection.id}
+                        collection={collection}
+                    />
+                ))}
+            </div>
+        </div>
+    )
 }

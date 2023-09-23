@@ -7,6 +7,7 @@ import Navbar from '@/components/Navbar'
 import { ThemeProvider } from '@/providers/ThemeProvider'
 const inter = Inter({ subsets: ['latin'] })
 import { cn } from '@/lib/utils'
+import { Toaster } from '@/components/ui/toaster'
 
 export const metadata: Metadata = {
     title: 'Create Next App',
@@ -32,6 +33,7 @@ export default function RootLayout({
                             <Separator />
                             <main className='flex flex-grow w-full justify-center items-center dark:bg-neutral-950 '>
                                 {children}
+                                <Toaster />
                             </main>
                         </div>
                     </ThemeProvider>
